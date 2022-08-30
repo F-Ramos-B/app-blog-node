@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    <h3><%= categoria ? 'Editar' : 'Criar' %> categoria</h3>
+  </div>
+  <form method="POST" action="/categorias/admin/categoria-criada">
+    <div class="card-body">
+      <div class="form-group row">
+        <label for="titulo" class="col-sm-2 col-form-label">Título</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            placeholder="Digite um título..."
+            name="titulo"
+            class="form-control"
+            id="titulo"
+            required
+            minlength="3"
+            maxlength="50"
+            value="<%= categoria ? categoria.titulo : null %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="descricao" class="col-sm-2 col-form-label">Descrição</label>
+        <% if (categoria) { %>
+        <input type="hidden" name="id" value="<%= categoria.id %>" />
+        <% } %>
+        <div class="col-sm-10">
+          <textarea
+            class="form-control"
+            name="descricao"
+            id="descricao"
+            rows="4"
+            placeholder="Digite uma descrição..."
+            minlength="3"
+            maxlength="250"
+            required
+          ><%= categoria ? categoria.descricao : null %></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <input type="submit" class="btn btn-dark btn-block" value="Confirmar" />
+    </div>
+  </form>
+</div>

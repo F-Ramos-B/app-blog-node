@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Listar categorias</h3>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-dark text-center">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Título</th>
+          <th scope="col">Slug</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Data criação</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const categoria of categorias) { %>
+        <tr>
+          <td><%= categoria.id %></td>
+          <td><%= categoria.titulo %></td>
+          <td><%= categoria.slug %></td>
+          <td><%= categoria.descricao %></td>
+          <td><%= moment(categoria.dataCriacao).format(dataHora) %></td>
+          <td>
+            <a
+              href="/categorias/admin/editar/<%= categoria.id %>"
+              class="btn btn-warning btn-block"
+              >Editar</a
+            >
+            <form
+              method="POST"
+              action="/categorias/admin/remover/"
+              onsubmit="confirmarRemocao(event, this)"
+            >
+              <input type="hidden" name="id" value="<%= categoria.id %>" />
+              <input
+                type="submit"
+                class="btn btn-danger btn-block"
+                value="Remover"
+              />
+            </form>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <a class="btn btn-dark btn-block" href="/categorias/admin/criar"
+      >Criar nova categoria</a
+    >
+  </div>
+</div>
+
+<script>
+  function confirmarRemocao(event, form) {
+    event.preventDefault();
+
+    if (confirm('Tem certeza que deseja excluir a categoria?')) {
+      form.submit();
+    }
+  }
+</script>

@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Listar artigos</h3>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-dark text-center">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Título</th>
+          <th scope="col">Slug</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Data criação</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const artigo of artigos) { %>
+        <tr>
+          <td><%= artigo.id %></td>
+          <td><%= artigo.titulo %></td>
+          <td><%= artigo.slug %></td>
+          <td><%= artigo.categoria.titulo %></td>
+          <td><%= moment(artigo.dataCriacao).format(dataHora) %></td>
+          <td>
+            <a
+              href="/artigos/admin/editar/<%= artigo.id %>"
+              class="btn btn-warning btn-block"
+              >Editar</a
+            >
+            <form
+              method="POST"
+              action="/artigos/admin/remover/"
+              onsubmit="confirmarRemocao(event, this)"
+            >
+              <input type="hidden" name="id" value="<%= artigo.id %>" />
+              <input
+                type="submit"
+                class="btn btn-danger btn-block"
+                value="Remover"
+              />
+            </form>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <a class="btn btn-dark btn-block" href="/artigos/admin/criar"
+      >Criar novo artigo</a
+    >
+  </div>
+</div>
+
+<script>
+  function confirmarRemocao(event, form) {
+    event.preventDefault();
+
+    if (confirm('Tem certeza que deseja excluir a artigo?')) {
+      form.submit();
+    }
+  }
+</script>
